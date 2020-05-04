@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="jquery-1.10.2.min.js"></script>
+    <link href="Main.css" rel="stylesheet" />
+  </head>
+  <body class="back-row-toggle splat-toggle">
+    <!-- <div class="slider">
+      <div class="slide1"></div>
+      <div class="slide2"></div>
+      <div class="slide3"></div>
+    </div> -->
+    <div class="rain front-row"></div>
+    <div class="rain back-row"></div>
+    <div class="content">
+      <div id="player">
+        <div id="songTitle">Baka Sakali</div>
+        <div id="buttons">
+          <button id="pre" onclick="pre()">
+            <img src="Pre.png" height="90%" width="90%" />
+          </button>
+          <button id="play" onclick="playOrPauseSong()">
+            <img src="Pause.png" />
+          </button>
+          <button id="next" onclick="next()">
+            <img src="Next.png" height="90%" width="90%" />
+          </button>
+        </div>
+
+        <div id="seek-bar">
+          <div id="fill"></div>
+          <div id="handle"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      var songs = ["hahahaha.mp3", "Song2.mp3", "Song3.mp3"];
+
+      var songTitle = document.getElementById("songTitle");
+      var fillBar = document.getElementById("fill");
+
+      var song = new Audio();
+      var currentSong = 0; // it point to the current song
+
+      window.onload = playSong();
+
+      function playSong() {
+        song.src = songs[currentSong]; //set the source of 0th song
+
+        songTitle.textContent = songs[currentSong]; // set the title of song
+
+        song.play(); // play the song
+      }
+
+      function playOrPauseSong() {
+        if (song.paused) {
+          song.play();
+          $("#play img").attr("src", "Pause.png");
+        } else {
+          song.pause();
+          $("#play img").attr("src", "Play.png");
+        }
+      }
+
+      song.addEventListener("timeupdate", function () {
+        var position = song.currentTime / song.duration;
+
+        fillBar.style.width = position * 100 + "%";
+      });
+
+      // function next(){
+
+      //     currentSong++;
+      //     if(currentSong > 2){
+      //         currentSong = 0;
+      //     }
+      //     playSong();
+      //     $("#play img").attr("src","Pause.png");
+      //     $("#image img").attr("src",poster[currentSong]);
+      //     $("#bg img").attr("src",poster[currentSong]);
+      // }
+
+      // function pre(){
+
+      //     currentSong--;
+      //     if(currentSong < 0){
+      //         currentSong = 2;
+      //     }
+      //     playSong();
+      //     $("#play img").attr("src","Pause.png");
+      //     $("#image img").attr("src",poster[currentSong]);
+      //     $("#bg img").attr("src",poster[currentSong]);
+      // }
+
+      var makeItRain = function () {
+        //clear out everything
+        $(".rain").empty();
+
+        var increment = 0;
+        var drops = "";
+        var backDrops = "";
+
+        while (increment < 100) {
+          //couple random numbers to use for various randomizations
+          //random number between 98 and 1
+          var randoHundo = Math.floor(Math.random() * (98 - 1 + 1) + 1);
+          //random number between 5 and 2
+          var randoFiver = Math.floor(Math.random() * (5 - 2 + 1) + 2);
+          //increment
+          increment += randoFiver;
+          //add in a new raindrop with various randomizations to certain CSS properties
+          drops +=
+            '<div class="drop" style="left: ' +
+            increment +
+            "%; bottom: " +
+            (randoFiver + randoFiver - 1 + 100) +
+            "%; animation-delay: 0." +
+            randoHundo +
+            "s; animation-duration: 0.5" +
+            randoHundo +
+            's;"><div class="stem" style="animation-delay: 0.' +
+            randoHundo +
+            "s; animation-duration: 0.5" +
+            randoHundo +
+            's;"></div><div class="splat" style="animation-delay: 0.' +
+            randoHundo +
+            "s; animation-duration: 0.5" +
+            randoHundo +
+            's;"></div></div>';
+          backDrops +=
+            '<div class="drop" style="right: ' +
+            increment +
+            "%; bottom: " +
+            (randoFiver + randoFiver - 1 + 100) +
+            "%; animation-delay: 0." +
+            randoHundo +
+            "s; animation-duration: 0.5" +
+            randoHundo +
+            's;"><div class="stem" style="animation-delay: 0.' +
+            randoHundo +
+            "s; animation-duration: 0.5" +
+            randoHundo +
+            's;"></div><div class="splat" style="animation-delay: 0.' +
+            randoHundo +
+            "s; animation-duration: 0.5" +
+            randoHundo +
+            's;"></div></div>';
+        }
+
+        $(".rain.front-row").append(drops);
+        $(".rain.back-row").append(backDrops);
+      };
+
+      makeItRain();
+    </script>
+  </body>
+</html>
